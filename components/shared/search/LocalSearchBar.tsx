@@ -34,7 +34,6 @@ export default function LocalSearchBar({
       <Input
         type="text"
         placeholder={placeholder}
-        value={""}
         className="paragraph-regular no-foucs placeholder background-light800_darkgradient border-none shadow-none outline-none"
       />
 
