@@ -1,10 +1,7 @@
-import { authMiddleware } from "@clerk/nextjs/server";
+import { clerkMiddleware } from "@clerk/nextjs/server";
 // import { NextResponse } from "next/server";
 
-export default authMiddleware({
-  publicRoutes: ["/", "/api/webhooks"],
-  ignoredRoutes: ["/api/webhooks", "/api/chatgpt"],
-});
+export default clerkMiddleware();
 
 export const config = {
   matcher: [
