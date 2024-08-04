@@ -5,6 +5,7 @@ import NoResult from "@/components/shared/NoResult";
 import LocalSearchBar from "@/components/shared/search/LocalSearchBar";
 import { Button } from "@/components/ui/button";
 import { HomePageFilters } from "@/contants/Filters";
+import { getQuestions } from "@/lib/actions/question.action";
 import Link from "next/link";
 
 const questions = [
@@ -68,7 +69,9 @@ const questions = [
   },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const result = await getQuestions({});
+
   return (
     <>
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
@@ -99,8 +102,8 @@ export default function Home() {
       <HomeFilteres />
 
       <div className="mt-10 flex w-full flex-col gap-6">
-        {questions.length > 0 ? (
-          questions.map((quesiton) => (
+        {result.questions.length > 0 ? (
+          result.questions.map((quesiton) => (
             <QuestionCard
               key={quesiton._id}
               _id={quesiton._id}
