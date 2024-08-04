@@ -55,7 +55,10 @@ const Question = ({ mongoUserId }: Props) => {
         path: pathname,
       });
       router.push("/");
+      setIsSubmitting(false);
     } catch (error) {
+      throw error;
+      setIsSubmitting(false);
     } finally {
       setIsSubmitting(false);
     }
