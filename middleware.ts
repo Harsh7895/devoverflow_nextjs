@@ -1,16 +1,14 @@
-import { authMiddleware, clerkMiddleware } from "@clerk/nextjs/server";
+import { authMiddleware } from "@clerk/nextjs/server";
+// import { NextResponse } from "next/server";
 
-// export default clerkMiddleware();
 export default authMiddleware({
   publicRoutes: ["/", "/api/webhooks"],
   ignoredRoutes: ["/api/webhooks", "/api/chatgpt"],
 });
 
-clerkMiddleware();
-
 export const config = {
   matcher: [
-    // Skip Next.js internals and all static files, unless found in search params
+    // Match all routes except for Next.js internals and static files
     "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
     // Always run for API routes
     "/(api|trpc)(.*)",
