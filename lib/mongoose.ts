@@ -16,6 +16,6 @@ export const connectToDatabase = async () => {
     console.log("MongoDb is connected");
   } catch (error) {
     isConnected = false;
-    console.log(error);
+    throw error;
   }
 };
