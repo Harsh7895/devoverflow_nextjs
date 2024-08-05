@@ -3,6 +3,7 @@ import React from "react";
 import RenderTag from "../shared/RenderTag";
 import Metric from "../shared/Metric";
 import { formatAndDivideNumber, getTimeStamp } from "@/lib/utils";
+import User from "@/database/user.model";
 
 interface QuestionProps {
   _id: string;
@@ -22,7 +23,7 @@ interface QuestionProps {
   createdAt: Date;
 }
 
-export default function QuestionCard({
+export default async function QuestionCard({
   _id,
   title,
   tags,
@@ -32,6 +33,7 @@ export default function QuestionCard({
   answers,
   createdAt,
 }: QuestionProps) {
+  const user = await User.findById(author._id);
   return (
     <div className="card-wrapper p-9 sm:px-11 rounded-[10px]">
       <div className="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row">
@@ -55,7 +57,7 @@ export default function QuestionCard({
 
       <div className="flex-between mt-6 w-full flex-wrap gap-3">
         <Metric
-          imgUrl="/assets/icons/avatar.svg"
+          imgUrl={user.picture}
           alt="user"
           value={author?.name}
           title={`  -  asked ${getTimeStamp(createdAt)}`}

@@ -8,67 +8,6 @@ import { HomePageFilters } from "@/contants/Filters";
 import { getQuestions } from "@/lib/actions/question.action";
 import Link from "next/link";
 
-const questions = [
-  {
-    _id: "1",
-    title: "Cascading Deletes in SQLAlchemy?",
-    tags: [
-      { _id: "1", name: "python" },
-      { _id: "2", name: "sql" },
-    ],
-    author: {
-      _id: "1",
-      name: "john Doe",
-      picture: "https://example.com/johndoe.jpg",
-    },
-    upvotes: 10,
-    views: 10000,
-    answers: [{ answerId: "a1", content: "You can use the `cascade` option." }],
-    createdAt: new Date(),
-  },
-  {
-    _id: "2",
-    title: "How to center a div",
-    tags: [
-      { _id: "3", name: "css" },
-      { _id: "4", name: "html" },
-    ],
-    author: {
-      _id: "2",
-      name: "jane Smith",
-      picture: "https://example.com/janesmith.jpg",
-    },
-    upvotes: 25,
-    views: 200,
-    answers: [
-      { answerId: "b1", content: "Use `margin: auto` with a defined width." },
-    ],
-    createdAt: new Date("2022-01-15T08:30:00.000Z"),
-  },
-  {
-    _id: "3",
-    title: "What is TypeScript?",
-    tags: [
-      { _id: "5", name: "typescript" },
-      { _id: "6", name: "javascript" },
-    ],
-    author: {
-      _id: "3",
-      name: "alice Johnson",
-      picture: "https://example.com/alicejohnson.jpg",
-    },
-    upvotes: 35,
-    views: 300,
-    answers: [
-      {
-        answerId: "c1",
-        content: "TypeScript is a superset of JavaScript with static typing.",
-      },
-    ],
-    createdAt: new Date("2023-03-12T14:45:00.000Z"),
-  },
-];
-
 export default async function Home() {
   const result = await getQuestions({});
 
