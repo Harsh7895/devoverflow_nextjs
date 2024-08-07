@@ -41,7 +41,7 @@ export default async function QuestionCard({
           <span className="text-dark200_light900 subtle-regular taxt-dark400_light700 line-clamp-1 flex sm:hidden">
             {getTimeStamp(createdAt)}
           </span>
-          <Link href={`/quesiton/${_id}`}>
+          <Link href={`/question/${_id}`}>
             <h3 className="sm:h3-semibold base-semibold text-dark200_light900 line-clamp-1 flex-1">
               {title}
             </h3>

@@ -19,9 +19,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Badge } from "../ui/badge";
 import Image from "next/image";
-import { truncate } from "fs";
 import { createQuestion } from "@/lib/actions/question.action";
 import { useRouter, usePathname } from "next/navigation";
+import { useTheme } from "@/context/ThemeProvider";
 interface Props {
   mongoUserId: string;
 }
@@ -29,6 +29,7 @@ interface Props {
 const type: any = "create";
 const Question = ({ mongoUserId }: Props) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { mode } = useTheme();
   const router = useRouter();
   const pathname = usePathname();
 
@@ -135,12 +136,13 @@ const Question = ({ mongoUserId }: Props) => {
               <FormControl className="mt-3.5">
                 <Editor
                   apiKey={process.env.NEXT_PUBLIC_TINY_EDITOR}
-                  onInit={(_evt, editor) => {
-                    //@ts-ignore
+                  onInit={(evt, editor) => {
+                    // @ts-ignore
                     editorRef.current = editor;
                   }}
-                  initialValue=""
+                  onBlur={field.onBlur}
                   onEditorChange={(content) => field.onChange(content)}
+                  // initialValue={parsedQuestionDetails?.content || ""}
                   init={{
                     height: 350,
                     menubar: false,
@@ -155,18 +157,19 @@ const Question = ({ mongoUserId }: Props) => {
                       "anchor",
                       "searchreplace",
                       "visualblocks",
+                      "codesample",
                       "fullscreen",
                       "insertdatetime",
                       "media",
                       "table",
-                      "wordcount",
                     ],
                     toolbar:
-                      "undo redo | blocks | " +
-                      "codesample | bold italic forecolor | alignleft aligncenter " +
-                      "alignright alignjustify | bullist numlist ",
-                    content_style:
-                      "body { font-family:Inter,Arial,sans-serif; font-size:14px }",
+                      "undo redo | " +
+                      "codesample | bold italic forecolor | alignleft aligncenter |" +
+                      "alignright alignjustify | bullist numlist",
+                    content_style: "body { font-family:Inter; font-size:16px }",
+                    skin: mode === "dark" ? "oxide-dark" : "oxide",
+                    content_css: mode === "dark" ? "dark" : "light",
                   }}
                 />
               </FormControl>
@@ -174,7 +177,7 @@ const Question = ({ mongoUserId }: Props) => {
                 Introduce the problem and expand on what you put in the title.
                 Minimum 20 characters.
               </FormDescription>
-              <FormMessage className="text-red-700" />
+              <FormMessage className="text-red-500" />
             </FormItem>
           )}
         />

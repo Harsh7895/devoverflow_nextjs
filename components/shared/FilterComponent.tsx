@@ -33,7 +33,11 @@ export default function FilterComponent({
         <SelectContent>
           <SelectGroup>
             {filters.map((item) => (
-              <SelectItem key={item.value} value={item.value}>
+              <SelectItem
+                key={item.value}
+                value={item.value}
+                className="text-dark500_light700 text-center"
+              >
                 {item.name}
               </SelectItem>
             ))}
