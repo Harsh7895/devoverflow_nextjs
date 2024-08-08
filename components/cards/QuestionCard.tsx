@@ -4,6 +4,8 @@ import RenderTag from "../shared/RenderTag";
 import Metric from "../shared/Metric";
 import { formatAndDivideNumber, getTimeStamp } from "@/lib/utils";
 import User from "@/database/user.model";
+import { SignedIn } from "@clerk/nextjs";
+import EditDeletAction from "../shared/EditDeletAction";
 
 interface QuestionProps {
   _id: string;
@@ -16,14 +18,17 @@ interface QuestionProps {
     _id: string;
     name: string;
     picture: string;
+    clerkId: string;
   };
   upvotes: string[];
   views: number;
   answers: Array<object>;
   createdAt: Date;
+  clerkId?: string | undefined | null;
 }
 
 export default async function QuestionCard({
+  clerkId,
   _id,
   title,
   tags,
@@ -34,6 +39,7 @@ export default async function QuestionCard({
   createdAt,
 }: QuestionProps) {
   const user = await User.findById(author._id);
+  const showActionButtons = clerkId && clerkId === user.clerkId;
   return (
     <div className="card-wrapper p-9 sm:px-11 rounded-[10px]">
       <div className="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row">
@@ -47,7 +53,11 @@ export default async function QuestionCard({
             </h3>
           </Link>
         </div>
-        {/* if signed in add edit delete actions */}
+        <SignedIn>
+          {showActionButtons && (
+            <EditDeletAction type="Question" itemId={JSON.stringify(_id)} />
+          )}
+        </SignedIn>
       </div>
       <div className="mt-3.5 flex flex-wrap gap-2">
         {tags.map((tag) => (
