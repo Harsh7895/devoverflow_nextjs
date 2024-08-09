@@ -35,7 +35,7 @@ export async function getUserById(params: any) {
   }
 }
 
-export async function createUser(userData: CreateUserParams) {
+export async function CreateUser(userData: CreateUserParams) {
   try {
     connectToDatabase();
 
@@ -138,6 +138,7 @@ export async function getAllUsers(params: GetAllUsersParams) {
       .sort(sortOptions)
       .skip(skipAmount)
       .limit(pageSize);
+    q;
 
     const totalUsers = await User.countDocuments(query);
     const isNext = totalUsers > skipAmount + users.length;
@@ -186,7 +187,7 @@ export async function toggleSaveQuestion(params: ToggleSaveQuestionParams) {
   }
 }
 
-export async function getSavedQuestions(params: GetSavedQuestionsParams) {
+export async function getSavedQuestion(params: GetSavedQuestionsParams) {
   try {
     connectToDatabase();
 
@@ -194,9 +195,13 @@ export async function getSavedQuestions(params: GetSavedQuestionsParams) {
 
     const skipAmount = (page - 1) * pageSize;
 
-    const query: FilterQuery<typeof Question> = searchQuery
-      ? { title: { $regex: new RegExp(searchQuery, "i") } }
-      : {};
+    const query: FilterQuery<typeof Question> = {};
+    if (searchQuery) {
+      query.$or = [
+        { title: { $regex: new RegExp(searchQuery, "i") } },
+        { content: { $regex: new RegExp(searchQuery, "i") } },
+      ];
+    }
 
     let sortOptions = {};
 
