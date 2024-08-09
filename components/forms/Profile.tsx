@@ -13,10 +13,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
+import { Textarea } from "../ui/textarea";
 import { useState } from "react";
 import { ProfileSchema } from "@/lib/validations";
 import { usePathname, useRouter } from "next/navigation";
-import { Textarea } from "../ui/textarea";
 import { UpdateUser } from "@/lib/actions/user.action";
 
 interface Props {
@@ -59,7 +59,7 @@ const Profile = ({ clerkId, user }: Props) => {
 
       router.back();
     } catch (error) {
-      console.log(error);
+      throw error;
     } finally {
       setIsSubmitting(false);
     }
