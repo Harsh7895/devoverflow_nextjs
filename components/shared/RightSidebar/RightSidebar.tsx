@@ -1,28 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import RenderTag from "../RenderTag";
+import { getHotQuestions } from "@/lib/actions/question.action";
+import { getTopPopularTags } from "@/lib/actions/tag.action";
 
-const hotQuestions = [
-  { _id: "1", title: "How do I use express as a custom server in NextJs?" },
-  { _id: "2", title: "Cascaading Deletes in SQLAchemy? ?" },
-  { _id: "3", title: "How to perfectly center a div with Tailwind Css" },
-  {
-    _id: "4",
-    title:
-      "Best practices for data fetching in Next.js application with Server-Side Rendering(SSR) ",
-  },
-  { _id: "5", title: "Redux Toolkit Not Updating State as Expected" },
-];
-
-const popularTags = [
-  { _id: "1", name: "javascript", totalQuestions: 5 },
-  { _id: "2", name: "node", totalQuestions: 2 },
-  { _id: "3", name: "react", totalQuestions: 4 },
-  { _id: "4", name: "mongoDb", totalQuestions: 5 },
-  { _id: "5", name: "next", totalQuestions: 5 },
-];
-
-export default function RightSidebar() {
+export default async function RightSidebar() {
+  const hotQuestions = await getHotQuestions();
+  const popularTags = await getTopPopularTags();
   return (
     <section className="background-light900_dark200 light-border sticky right-0 top-0 flex h-screen flex-col overflow-y-auto border-l p-6 pt-28 shadow-light-300 dark:shadow-none max-lg:hidden w-[350px]">
       <div>
@@ -30,7 +14,7 @@ export default function RightSidebar() {
         <div className="mt-7 flex w-full flex-col gap-[30px]">
           {hotQuestions.map((question) => (
             <Link
-              href={`/questions/${question._id}`}
+              href={`/question/${question._id}`}
               key={question._id}
               className="flex cursor-pointer items-center justify-between gap-7"
             >
@@ -55,7 +39,7 @@ export default function RightSidebar() {
             key={tag._id}
             _id={tag._id}
             name={tag.name}
-            totalQuestions={tag.totalQuestions}
+            totalQuestions={tag.numberofQuestions}
             showCount
           />
         ))}

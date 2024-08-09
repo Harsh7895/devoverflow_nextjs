@@ -2,11 +2,11 @@ import UserCard from "@/components/cards/UserCard";
 import FilterComponent from "@/components/shared/FilterComponent";
 import LocalSearchBar from "@/components/shared/search/LocalSearchBar";
 import { UserFilters } from "@/contants/Filters";
-import { getAllUser } from "@/lib/actions/user.action";
+import { getAllUsers } from "@/lib/actions/user.action";
 import Link from "next/link";
 
 export default async function page() {
-  const result = await getAllUser({});
+  const result = await getAllUsers({});
   return (
     <>
       <h1 className="h1-bold text-dark100_light900 sm:text-2xl">All Users</h1>
