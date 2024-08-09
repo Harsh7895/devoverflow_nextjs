@@ -17,7 +17,7 @@ import { Textarea } from "../ui/textarea";
 import { useState } from "react";
 import { ProfileSchema } from "@/lib/validations";
 import { usePathname, useRouter } from "next/navigation";
-import { UpdateUser } from "@/lib/actions/user.action";
+import { updateUser } from "@/lib/actions/user.action";
 
 interface Props {
   clerkId: string;
@@ -45,7 +45,7 @@ const Profile = ({ clerkId, user }: Props) => {
     setIsSubmitting(true);
 
     try {
-      await UpdateUser({
+      await updateUser({
         clerkId,
         updateData: {
           name: values.name,

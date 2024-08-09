@@ -3,14 +3,14 @@ import FilterComponent from "@/components/shared/FilterComponent";
 import NoResult from "@/components/shared/NoResult";
 import LocalSearchBar from "@/components/shared/search/LocalSearchBar";
 import { QuestionFilters } from "@/contants/Filters";
-import { getSavedQuestion } from "@/lib/actions/user.action";
+import { getSavedQuestions } from "@/lib/actions/user.action";
 import { SearchParamsProps } from "@/types";
 import { auth } from "@clerk/nextjs/server";
 
 export default async function Page({ searchParams }: SearchParamsProps) {
   const { userId } = auth();
   if (!userId) return null;
-  const result = await getSavedQuestion({
+  const result = await getSavedQuestions({
     clerkId: userId,
     searchQuery: searchParams.q,
   });

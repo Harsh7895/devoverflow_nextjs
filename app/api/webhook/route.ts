@@ -1,7 +1,7 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
-import { CreateUser, deleteUser, UpdateUser } from "@/lib/actions/user.action";
+import { createUser, deleteUser, updateUser } from "@/lib/actions/user.action";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -58,7 +58,7 @@ export async function POST(req: Request) {
     const { id, email_addresses, first_name, last_name, image_url, username } =
       evt.data;
 
-    const mongoUser = await CreateUser({
+    const mongoUser = await createUser({
       clerkId: id,
       name: `${first_name}  ${last_name ? last_name : ""}`,
       username: username!,
@@ -71,7 +71,7 @@ export async function POST(req: Request) {
   if (eventType === "user.updated") {
     const { id, email_addresses, first_name, last_name, image_url, username } =
       evt.data;
-    const updatedUser = await UpdateUser({
+    const updatedUser = await updateUser({
       clerkId: id,
       updateData: {
         name: `${first_name}  ${last_name ? last_name : ""}`,
